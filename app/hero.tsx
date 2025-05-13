@@ -272,7 +272,7 @@ export default function Home() {
     };
 
     return (
-        <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 bg-[url('/bg.webp')] bg-cover bg-center bg-no-repeat">
+        <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 bg-[url('/mcc/bg.webp')] bg-cover bg-center bg-no-repeat">
             <div className="bg-black/60 min-h-screen">
                 <div className="container mx-auto px-4 py-12">
                     <div className="flex justify-center mb-8">
