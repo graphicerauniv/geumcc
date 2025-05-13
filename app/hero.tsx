@@ -336,7 +336,7 @@ export default function Home() {
                         {/* Form Container */}
                         <div
                             className={cn(
-                                "bg-white/10 backdrop-blur-lg rounded-3xl border-2 border-white/20 p-6 md:p-8 max-w-md mx-auto w-full shadow-xl",
+                                "bg-white/10 backdrop-blur-lg rounded-3xl border-2 border-white/20 p-6 md:p-8 max-w-md ml-auto w-full shadow-xl",
                                 {
                                     "bg-white/40 backdrop-blur-xl":
                                         formSubmitted || formError,
@@ -363,7 +363,6 @@ export default function Home() {
                                         <div className="text-lg">
                                             Registration successful! We look
                                             forward to seeing you at the event.
-                                            A confirmation email has been sent.
                                         </div>
                                     </div>
                                 </div>
