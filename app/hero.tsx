@@ -301,17 +301,51 @@ export default function Home() {
                         {/* Hero Content */}
                         <div className="text-white mb-12 md:mb-0">
                             <h2 className="text-4xl md:text-5xl font-bold mb-4 font-serif">
-                                Career Guidance Event 2025
+                                Mega Career Counselling'25
                             </h2>
                             <p className="text-xl mb-4">
                                 Get guided by the education experts of India
                             </p>
-                            <p className="text-sm mb-8">
-                                Join us for a comprehensive career guidance
-                                session where experts will address students from
-                                all domains through tailored sessions. Event
-                                includes hi-tea for all participants.
+                            <p className="text mb-8">
+                                Hosted by some of India's leading education
+                                experts — don't miss this opportunity to plan
+                                your future with clarity and confidence.
                             </p>
+
+                            <div className="mb-8">
+                                <h3 className="text-xl font-semibold mb-3">
+                                    Event Highlights:
+                                </h3>
+                                <ul className="space-y-2">
+                                    <li className="flex items-start">
+                                        <span className="text-blue-400 mr-2">
+                                            •
+                                        </span>
+                                        <span>
+                                            Get expert guidance on shaping your
+                                            career in the AI generation.
+                                        </span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <span className="text-blue-400 mr-2">
+                                            •
+                                        </span>
+                                        <span>
+                                            Tailored sessions across all major
+                                            domains
+                                        </span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <span className="text-blue-400 mr-2">
+                                            •
+                                        </span>
+                                        <span>
+                                            Personal Interviews & Spot
+                                            Admissions
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
 
                             {/* Event details */}
                             <div className="flex flex-col gap-4 mb-8">
@@ -321,7 +355,7 @@ export default function Home() {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Clock className="h-5 w-5 text-blue-400" />
-                                    <span>10:00 AM onwards</span>
+                                    <span> Reporting Time: 9:00 AM </span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <MapPin className="h-5 w-5 text-blue-400" />
@@ -419,7 +453,7 @@ export default function Home() {
                                             control={form.control}
                                             name="name"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="w-full">
                                                     <FormLabel className="text-white font-medium">
                                                         Full Name
                                                     </FormLabel>
@@ -427,7 +461,7 @@ export default function Home() {
                                                         <Input
                                                             placeholder="Your Name"
                                                             {...field}
-                                                            className="bg-white/90 border-zinc-300"
+                                                            className="bg-white/90 border-zinc-300 w-full"
                                                         />
                                                     </FormControl>
                                                     <FormMessageStyled>
@@ -441,21 +475,21 @@ export default function Home() {
                                             )}
                                         />
 
-                                        <div className="space-y-2">
+                                        <div className="space-y-2 w-full">
                                             <FormField
                                                 control={form.control}
                                                 name="email"
                                                 render={({ field }) => (
-                                                    <FormItem>
+                                                    <FormItem className="w-full">
                                                         <FormLabel className="text-white font-medium">
                                                             Email
                                                         </FormLabel>
-                                                        <div className="flex gap-2">
-                                                            <FormControl>
+                                                        <div className="flex gap-2 flex-wrap sm:flex-nowrap">
+                                                            <FormControl className="w-full sm:flex-1">
                                                                 <Input
                                                                     placeholder="your.email@example.com"
                                                                     {...field}
-                                                                    className="bg-white/90 border-zinc-300"
+                                                                    className="bg-white/90 border-zinc-300 w-full"
                                                                     disabled={
                                                                         emailVerified ||
                                                                         emailOtpSent
@@ -482,6 +516,7 @@ export default function Home() {
                                                                             "emailOtp"
                                                                         );
                                                                     }}
+                                                                    className="mt-2 sm:mt-0"
                                                                 >
                                                                     Edit
                                                                 </Button>
@@ -501,7 +536,7 @@ export default function Home() {
                                                                         submitting ||
                                                                         !field.value
                                                                     }
-                                                                    className="bg-blue-600 hover:bg-blue-700 text-white border-white/20"
+                                                                    className="bg-blue-600 hover:bg-blue-700 text-white border-white/20 mt-2 sm:mt-0"
                                                                 >
                                                                     {emailVerified
                                                                         ? "Verified"
@@ -568,20 +603,21 @@ export default function Home() {
                                             )}
                                         </div>
 
-                                        <div className="space-y-2">
+                                        <div className="space-y-2 w-full">
                                             <FormField
                                                 control={form.control}
                                                 name="phone"
                                                 render={({ field }) => (
-                                                    <FormItem>
+                                                    <FormItem className="w-full">
                                                         <FormLabel className="text-white font-medium">
                                                             Phone Number
                                                         </FormLabel>
-                                                        <div className="flex gap-2">
-                                                            <FormControl>
+                                                        <div className="flex gap-2 flex-wrap sm:flex-nowrap">
+                                                            <FormControl className="w-full sm:flex-1">
                                                                 <Input
                                                                     placeholder="9876543210"
                                                                     {...field}
+                                                                    className="bg-white/90 border-zinc-300 w-full"
                                                                     className="bg-white/90 border-zinc-300"
                                                                     disabled={
                                                                         phoneVerified ||
@@ -695,7 +731,7 @@ export default function Home() {
                                             )}
                                         </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                             <FormField
                                                 control={form.control}
                                                 name="state"
@@ -814,7 +850,7 @@ export default function Home() {
                                             />
                                         </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                             <FormField
                                                 control={form.control}
                                                 name="domain"
@@ -887,7 +923,7 @@ export default function Home() {
                                                         >
                                                             <FormControl>
                                                                 <SelectTrigger className="bg-white/90 border-zinc-300 w-full">
-                                                                    <SelectValue placeholder="Select education level" />
+                                                                    <SelectValue placeholder="Select education" />
                                                                 </SelectTrigger>
                                                             </FormControl>
                                                             <SelectContent>
