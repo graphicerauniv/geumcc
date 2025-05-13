@@ -924,7 +924,9 @@ export default function Home() {
                                                     <div className="space-y-1 leading-none">
                                                         <FormLabel className="text-white font-medium">
                                                             Are you already
-                                                            registered?
+                                                            registered for
+                                                            University
+                                                            Counselling?
                                                         </FormLabel>
                                                     </div>
                                                 </FormItem>
