@@ -109,7 +109,7 @@ export default function Home() {
 
             setSubmitting(true);
             // Call API route to send OTP
-            const response = await fetch("/api/send-otp", {
+            const response = await fetch("/mcc/api/send-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ identifier: email, type: "EMAIL" }),
@@ -143,7 +143,7 @@ export default function Home() {
 
             setSubmitting(true);
             // Call API route to send OTP
-            const response = await fetch("/api/send-otp", {
+            const response = await fetch("/mcc/api/send-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ identifier: phone, type: "PHONE" }),
@@ -177,7 +177,7 @@ export default function Home() {
 
             setSubmitting(true);
             // Call API route to verify OTP
-            const response = await fetch("/api/verify-otp", {
+            const response = await fetch("/mcc/api/verify-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ identifier: email, type: "EMAIL", otp }),
@@ -211,7 +211,7 @@ export default function Home() {
 
             setSubmitting(true);
             // Call API route to verify OTP
-            const response = await fetch("/api/verify-otp", {
+            const response = await fetch("/mcc/api/verify-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ identifier: phone, type: "PHONE", otp }),
@@ -242,7 +242,7 @@ export default function Home() {
         setSubmitting(true);
         try {
             // Submit the form data to your backend
-            const response = await fetch("/api/submit-form", {
+            const response = await fetch("/mcc/api/submit-form", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values),
