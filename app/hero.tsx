@@ -45,10 +45,26 @@ const formSchema = z.object({
 
 const DOMAINS = [
     { value: "computer-science", label: "Computer Science" },
-    { value: "information-technology", label: "Information Technology" },
-    { value: "electronics", label: "Electronics" },
-    { value: "mechanical", label: "Mechanical" },
-    { value: "civil", label: "Civil" },
+    { value: "aerospace-engineering", label: "Aerospace Engineering" },
+    {
+        value: "electronics-and-communication",
+        label: "Electronics and Communication",
+    },
+    { value: "mechanical-engineering", label: "Mechanical Engineering" },
+    { value: "civil-engineering", label: "Civil Engineering" },
+    { value: "biotechnology", label: "Biotechnology" },
+    { value: "management", label: "Management" },
+    { value: "commerce", label: "Commerce" },
+    { value: "law", label: "Law" },
+    { value: "design", label: "Design" },
+    { value: "media-and-mass-com", label: "Media and Mass Com" },
+    { value: "fashion-design", label: "Fashion Design" },
+    {
+        value: "humanities-and-social-sciences",
+        label: "Humanities and Social Sciences",
+    },
+    { value: "paramedical-sciences", label: "Paramedical Sciences" },
+    { value: "life-sciences", label: "Life Sciences" },
 ];
 
 const EDUCATION_LEVELS = [
@@ -684,7 +700,7 @@ export default function Home() {
                                                 control={form.control}
                                                 name="state"
                                                 render={({ field }) => (
-                                                    <FormItem>
+                                                    <FormItem className="w-full">
                                                         <FormLabel className="text-white font-medium">
                                                             State
                                                         </FormLabel>
@@ -707,7 +723,7 @@ export default function Home() {
                                                             }
                                                         >
                                                             <FormControl>
-                                                                <SelectTrigger className="bg-white/90 border-zinc-300">
+                                                                <SelectTrigger className="bg-white/90 border-zinc-300 w-full">
                                                                     <SelectValue placeholder="Select a state" />
                                                                 </SelectTrigger>
                                                             </FormControl>
@@ -746,7 +762,7 @@ export default function Home() {
                                                 control={form.control}
                                                 name="city"
                                                 render={({ field }) => (
-                                                    <FormItem>
+                                                    <FormItem className="w-full">
                                                         <FormLabel className="text-white font-medium">
                                                             City
                                                         </FormLabel>
@@ -759,7 +775,7 @@ export default function Home() {
                                                             }
                                                         >
                                                             <FormControl>
-                                                                <SelectTrigger className="bg-white/90 border-zinc-300">
+                                                                <SelectTrigger className="bg-white/90 border-zinc-300 w-full">
                                                                     <SelectValue placeholder="Select a city" />
                                                                 </SelectTrigger>
                                                             </FormControl>
@@ -803,7 +819,7 @@ export default function Home() {
                                                 control={form.control}
                                                 name="domain"
                                                 render={({ field }) => (
-                                                    <FormItem>
+                                                    <FormItem className="w-full">
                                                         <FormLabel className="text-white font-medium">
                                                             Domain
                                                         </FormLabel>
@@ -816,7 +832,7 @@ export default function Home() {
                                                             }
                                                         >
                                                             <FormControl>
-                                                                <SelectTrigger className="bg-white/90 border-zinc-300">
+                                                                <SelectTrigger className="bg-white/90 border-zinc-300 w-full">
                                                                     <SelectValue placeholder="Select a domain" />
                                                                 </SelectTrigger>
                                                             </FormControl>
@@ -857,7 +873,7 @@ export default function Home() {
                                                 control={form.control}
                                                 name="education"
                                                 render={({ field }) => (
-                                                    <FormItem>
+                                                    <FormItem className="w-full">
                                                         <FormLabel className="text-white font-medium">
                                                             Education Level
                                                         </FormLabel>
@@ -870,7 +886,7 @@ export default function Home() {
                                                             }
                                                         >
                                                             <FormControl>
-                                                                <SelectTrigger className="bg-white/90 border-zinc-300">
+                                                                <SelectTrigger className="bg-white/90 border-zinc-300 w-full">
                                                                     <SelectValue placeholder="Select education level" />
                                                                 </SelectTrigger>
                                                             </FormControl>
