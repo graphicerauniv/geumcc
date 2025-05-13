@@ -301,15 +301,15 @@ export default function Home() {
                         {/* Hero Content */}
                         <div className="text-white mb-12 md:mb-0">
                             <h2 className="text-4xl md:text-5xl font-bold mb-4 font-serif">
-                                Mega Career Counselling'25
+                                Mega Career Counselling&apos;25
                             </h2>
                             <p className="text-xl mb-4">
                                 Get guided by the education experts of India
                             </p>
                             <p className="text mb-8">
-                                Hosted by some of India's leading education
-                                experts — don't miss this opportunity to plan
-                                your future with clarity and confidence.
+                                Hosted by some of India&apos;s leading education
+                                experts — don&apos;t miss this opportunity to
+                                plan your future with clarity and confidence.
                             </p>
 
                             <div className="mb-8">
@@ -617,7 +617,6 @@ export default function Home() {
                                                                 <Input
                                                                     placeholder="9876543210"
                                                                     {...field}
-                                                                    className="bg-white/90 border-zinc-300 w-full"
                                                                     className="bg-white/90 border-zinc-300"
                                                                     disabled={
                                                                         phoneVerified ||
