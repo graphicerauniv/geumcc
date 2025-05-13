@@ -301,7 +301,7 @@ export default function Home() {
                         {/* Hero Content */}
                         <div className="text-white mb-12 md:mb-0">
                             <h2 className="text-4xl md:text-5xl font-bold mb-4 font-serif">
-                                Mega Career Counselling&apos;25
+                                Mega Career Counselling
                             </h2>
                             <p className="text-xl mb-4">
                                 Get guided by the education experts of India
