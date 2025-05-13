@@ -6,6 +6,21 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+    --font-sans: "Poppins", sans-serif;
+    --font-serif: "Playfair Display", serif;
+
+    --color-one: #ffd700;
+    --color-one-light: #ffe44d;
+    --color-one-dark: #ccac00;
+    --color-one-darker: #998000;
+
+    --color-two: #0066cc;
+    --color-two-light: #0080ff;
+    --color-two-dark: #004c99;
+    --color-two-darker: #003366;
+}
+
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
