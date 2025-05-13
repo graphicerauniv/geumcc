@@ -29,6 +29,7 @@ import logo from "@/assets/geu-white.svg";
 import { PLACES } from "@/data/static";
 
 import { Calendar, Clock, MapPin } from "lucide-react";
+import { getUTMParams, prepareERPData, trackFormSubmission } from "@/lib/form";
 
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -256,8 +257,86 @@ export default function Home() {
         }
 
         setSubmitting(true);
+
+        const utmParams = getUTMParams();
+        const registrationDateAndTime = new Date().toLocaleString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            hour12: true,
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+        });
+
+        // ------------ Tracking Data ---------------------------------------------------
+        trackFormSubmission();
+
         try {
-            // Submit the form data to your backend
+            // ------------ AWS API -------------------------------------------------------
+            const awsApiData = {
+                ...utmParams,
+                name: values.name,
+                email: values.email,
+                phone: values.phone,
+                campaign_source: `MCC-LP`,
+                domain: values.domain,
+                education: values.education,
+                state: values.state,
+                city: values.city,
+                RegistrationTime: registrationDateAndTime,
+            };
+
+            // ------------ CMS API -------------------------------------------------------
+            const erpData = prepareERPData(values, utmParams);
+
+            // ------------ Addition API ---------------------------------------------------
+            const additionalApiData = new URLSearchParams({
+                apikey: "4b4edae164jfghfyhtfytdgty",
+                campus_code: "geu",
+                from_name: values.name,
+                from_email: values.email,
+                phone_number: values.phone,
+                state: values.state,
+                city: values.city,
+                department: values.domain,
+                course: values.education,
+                ...utmParams,
+            }).toString();
+
+            // Execute all API calls in parallel
+            await Promise.all([
+                fetch(
+                    "https://olwhyb4daf.execute-api.ap-south-1.amazonaws.com/v1/put-data",
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(awsApiData),
+                    }
+                ),
+                fetch(
+                    "https://publisher.extraaedge.com/api/Webhook/addPublisherLead",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(erpData),
+                    }
+                ),
+                fetch(
+                    `https://apply.geu.ac.in/univer/public/api/store-json?${additionalApiData}`,
+                    {
+                        method: "POST",
+                        redirect: "follow",
+                    }
+                ),
+            ]);
+
+            // ------------ Main DB --------------------------------------------------------
             const response = await fetch("/mcc/api/submit-form", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
