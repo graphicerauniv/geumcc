@@ -34,7 +34,6 @@ import { getUTMParams, prepareERPData, trackFormSubmission } from "@/lib/form";
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
     email: z.string().email("Invalid email address"),
-    emailOtp: z.string().min(6, "OTP must be 6 digits").optional(),
     phone: z.string().length(10, "Phone number must be 10 digits"),
     phoneOtp: z.string().min(6, "OTP must be 6 digits").optional(),
     state: z.string().min(1, "State is required"),
@@ -90,9 +89,7 @@ const FormMessageStyled = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default function Home() {
-    const [emailVerified, setEmailVerified] = useState(false);
     const [phoneVerified, setPhoneVerified] = useState(false);
-    const [emailOtpSent, setEmailOtpSent] = useState(false);
     const [phoneOtpSent, setPhoneOtpSent] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -103,7 +100,6 @@ export default function Home() {
         defaultValues: {
             name: "",
             email: "",
-            emailOtp: "",
             phone: "",
             phoneOtp: "",
             state: "Uttarakhand",
@@ -113,40 +109,6 @@ export default function Home() {
             isRegistered: false,
         },
     });
-
-    const handleSendEmailOTP = async () => {
-        try {
-            const email = form.getValues("email");
-            if (!email) {
-                form.setError("email", {
-                    message: "Please enter a valid email first",
-                });
-                return;
-            }
-
-            setSubmitting(true);
-            // Call API route to send OTP
-            const response = await fetch("/mcc/api/send-otp", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ identifier: email, type: "EMAIL" }),
-            });
-
-            if (response.ok) {
-                setEmailOtpSent(true);
-            } else {
-                const data = await response.json();
-                form.setError("email", {
-                    message: data.message || "Failed to send OTP",
-                });
-            }
-        } catch (error) {
-            console.error("Error sending email OTP:", error);
-            form.setError("email", { message: "Failed to send OTP" });
-        } finally {
-            setSubmitting(false);
-        }
-    };
 
     const handleSendPhoneOTP = async () => {
         try {
@@ -177,40 +139,6 @@ export default function Home() {
         } catch (error) {
             console.error("Error sending phone OTP:", error);
             form.setError("phone", { message: "Failed to send OTP" });
-        } finally {
-            setSubmitting(false);
-        }
-    };
-
-    const handleVerifyEmailOTP = async () => {
-        try {
-            const email = form.getValues("email");
-            const otp = form.getValues("emailOtp");
-
-            if (!otp) {
-                form.setError("emailOtp", { message: "Please enter the OTP" });
-                return;
-            }
-
-            setSubmitting(true);
-            // Call API route to verify OTP
-            const response = await fetch("/mcc/api/verify-otp", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ identifier: email, type: "EMAIL", otp }),
-            });
-
-            if (response.ok) {
-                setEmailVerified(true);
-            } else {
-                const data = await response.json();
-                form.setError("emailOtp", {
-                    message: data.message || "Invalid OTP",
-                });
-            }
-        } catch (error) {
-            console.error("Error verifying email OTP:", error);
-            form.setError("emailOtp", { message: "Failed to verify OTP" });
         } finally {
             setSubmitting(false);
         }
@@ -251,8 +179,8 @@ export default function Home() {
     };
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        if (!emailVerified || !phoneVerified) {
-            alert("Please verify both your email and phone number");
+        if (!phoneVerified) {
+            alert("Please verify your phone number");
             return;
         }
 
@@ -554,133 +482,31 @@ export default function Home() {
                                             )}
                                         />
 
-                                        <div className="space-y-2 w-full">
-                                            <FormField
-                                                control={form.control}
-                                                name="email"
-                                                render={({ field }) => (
-                                                    <FormItem className="w-full">
-                                                        <FormLabel className="text-white font-medium">
-                                                            Email
-                                                        </FormLabel>
-                                                        <div className="flex gap-2 flex-wrap sm:flex-nowrap">
-                                                            <FormControl className="w-full sm:flex-1">
-                                                                <Input
-                                                                    placeholder="your.email@example.com"
-                                                                    {...field}
-                                                                    className="bg-white/90 border-zinc-300 w-full"
-                                                                    disabled={
-                                                                        emailVerified ||
-                                                                        emailOtpSent
-                                                                    }
-                                                                />
-                                                            </FormControl>
-                                                            {emailOtpSent &&
-                                                            !emailVerified ? (
-                                                                <Button
-                                                                    type="button"
-                                                                    variant="outline"
-                                                                    onClick={() => {
-                                                                        setEmailOtpSent(
-                                                                            false
-                                                                        );
-                                                                        form.setValue(
-                                                                            "emailOtp",
-                                                                            ""
-                                                                        );
-                                                                        form.clearErrors(
-                                                                            "email"
-                                                                        );
-                                                                        form.clearErrors(
-                                                                            "emailOtp"
-                                                                        );
-                                                                    }}
-                                                                    className="mt-2 sm:mt-0"
-                                                                >
-                                                                    Edit
-                                                                </Button>
-                                                            ) : (
-                                                                <Button
-                                                                    type="button"
-                                                                    variant={
-                                                                        emailVerified
-                                                                            ? "outline"
-                                                                            : "secondary"
-                                                                    }
-                                                                    onClick={
-                                                                        handleSendEmailOTP
-                                                                    }
-                                                                    disabled={
-                                                                        emailVerified ||
-                                                                        submitting ||
-                                                                        !field.value
-                                                                    }
-                                                                    className="bg-blue-600 hover:bg-blue-700 text-white border-white/20 mt-2 sm:mt-0"
-                                                                >
-                                                                    {emailVerified
-                                                                        ? "Verified"
-                                                                        : emailOtpSent
-                                                                        ? "Resend"
-                                                                        : "Send OTP"}
-                                                                </Button>
-                                                            )}
-                                                        </div>
-                                                        <FormMessageStyled>
-                                                            {
-                                                                form.formState
-                                                                    .errors
-                                                                    .email
-                                                                    ?.message
-                                                            }
-                                                        </FormMessageStyled>
-                                                    </FormItem>
-                                                )}
-                                            />
-
-                                            {emailOtpSent && !emailVerified && (
-                                                <FormField
-                                                    control={form.control}
-                                                    name="emailOtp"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel className="text-white font-medium">
-                                                                Email OTP
-                                                            </FormLabel>
-                                                            <div className="flex gap-2">
-                                                                <FormControl>
-                                                                    <Input
-                                                                        placeholder="Enter OTP"
-                                                                        {...field}
-                                                                        className="bg-white/90 border-zinc-300"
-                                                                    />
-                                                                </FormControl>
-                                                                <Button
-                                                                    type="button"
-                                                                    onClick={
-                                                                        handleVerifyEmailOTP
-                                                                    }
-                                                                    disabled={
-                                                                        submitting
-                                                                    }
-                                                                    className="bg-blue-600 hover:bg-blue-700 text-white"
-                                                                >
-                                                                    Verify
-                                                                </Button>
-                                                            </div>
-                                                            <FormMessageStyled>
-                                                                {
-                                                                    form
-                                                                        .formState
-                                                                        .errors
-                                                                        .emailOtp
-                                                                        ?.message
-                                                                }
-                                                            </FormMessageStyled>
-                                                        </FormItem>
-                                                    )}
-                                                />
+                                        <FormField
+                                            control={form.control}
+                                            name="email"
+                                            render={({ field }) => (
+                                                <FormItem className="w-full">
+                                                    <FormLabel className="text-white font-medium">
+                                                        Email
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="your.email@example.com"
+                                                            {...field}
+                                                            className="bg-white/90 border-zinc-300 w-full"
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessageStyled>
+                                                        {
+                                                            form.formState
+                                                                .errors.email
+                                                                ?.message
+                                                        }
+                                                    </FormMessageStyled>
+                                                </FormItem>
                                             )}
-                                        </div>
+                                        />
 
                                         <div className="space-y-2 w-full">
                                             <FormField
@@ -1082,9 +908,7 @@ export default function Home() {
                                                     }
                                                 )}
                                                 disabled={
-                                                    !emailVerified ||
-                                                    !phoneVerified ||
-                                                    submitting
+                                                    !phoneVerified || submitting
                                                 }
                                             >
                                                 {submitting && (
