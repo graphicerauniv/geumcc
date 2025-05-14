@@ -1,4 +1,4 @@
-import type { FormValues, UTMParams, ERPData } from "./types";
+import type { FormValues, UTMParams, ERPData, ExtraQueryParams } from "./types";
 
 declare global {
     interface Window {
@@ -25,6 +25,13 @@ export const getUTMParams = (): UTMParams => {
         adpos: queryParams.get("adpos") || "",
         gadid: queryParams.get("gadid") || "",
         fbadid: queryParams.get("fbadid") || "",
+    };
+};
+
+export const getExtraQueryParams = (): ExtraQueryParams => {
+    const queryParams = new URLSearchParams(window.location.search);
+    return {
+        reff: queryParams.get("reff") || "",
     };
 };
 

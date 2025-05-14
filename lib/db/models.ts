@@ -15,6 +15,7 @@ const FormSubmissionSchema = new Schema<IFormSubmissionDocument>({
     domain: { type: String, required: true },
     education: { type: String, required: true },
     isRegistered: { type: Boolean, required: true },
+    reff: { type: String, required: false },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 });

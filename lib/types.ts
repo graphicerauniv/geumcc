@@ -20,6 +20,8 @@ export interface FormSubmission {
     domain: string;
     education: string;
     isRegistered: boolean;
+
+    reff?: string;
 }
 
 // FOR HERO PAGE
@@ -47,6 +49,10 @@ export interface UTMParams {
     adpos: string;
     gadid: string;
     fbadid: string;
+}
+
+export interface ExtraQueryParams {
+    reff: string;
 }
 
 export interface MessageSentState {

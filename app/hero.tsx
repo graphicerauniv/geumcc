@@ -29,7 +29,12 @@ import logo from "@/assets/geu-white.svg";
 import { PLACES } from "@/data/static";
 
 import { Calendar, Clock, MapPin } from "lucide-react";
-import { getUTMParams, prepareERPData, trackFormSubmission } from "@/lib/form";
+import {
+    getExtraQueryParams,
+    getUTMParams,
+    prepareERPData,
+    trackFormSubmission,
+} from "@/lib/form";
 
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -187,6 +192,8 @@ export default function Home() {
         setSubmitting(true);
 
         const utmParams = getUTMParams();
+        const extraQueryParams = getExtraQueryParams();
+
         const registrationDateAndTime = new Date().toLocaleString("en-IN", {
             timeZone: "Asia/Kolkata",
             hour12: true,
@@ -214,6 +221,7 @@ export default function Home() {
                 state: values.state,
                 city: values.city,
                 RegistrationTime: registrationDateAndTime,
+                ...extraQueryParams,
             };
 
             // ------------ CMS API -------------------------------------------------------
@@ -231,6 +239,7 @@ export default function Home() {
                 department: values.domain,
                 course: values.education,
                 ...utmParams,
+                ...extraQueryParams,
             }).toString();
 
             // Execute all API calls in parallel
@@ -268,7 +277,7 @@ export default function Home() {
             const response = await fetch("/mcc/api/submit-form", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(values),
+                body: JSON.stringify({ ...values, ...extraQueryParams }),
             });
 
             if (response.ok) {
