@@ -194,7 +194,8 @@ export default function Home() {
         const utmParams = getUTMParams();
         const extraQueryParams = getExtraQueryParams();
 
-        const registrationDateAndTime = new Date().toLocaleString("en-IN", {
+        const today = new Date();
+        const registrationDateAndTime = today.toLocaleString("en-IN", {
             timeZone: "Asia/Kolkata",
             hour12: true,
             day: "2-digit",
@@ -204,6 +205,9 @@ export default function Home() {
             minute: "2-digit",
             second: "2-digit",
         });
+        const phoneWithDateAndTime = `${String(
+            values.phone
+        )}-${today.toISOString()}`;
 
         // ------------ Tracking Data ---------------------------------------------------
         trackFormSubmission();
@@ -214,7 +218,7 @@ export default function Home() {
                 ...utmParams,
                 name: values.name,
                 email: values.email,
-                phone: values.phone,
+                phone: phoneWithDateAndTime,
                 campaign_source: `MCC-LP`,
                 domain: values.domain,
                 education: values.education,
