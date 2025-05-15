@@ -207,7 +207,7 @@ export default function Home() {
         });
         const phoneWithDateAndTime = `${String(
             values.phone
-        )}-${today.toISOString()}`;
+        )}#${today.toISOString()}`;
 
         // ------------ Tracking Data ---------------------------------------------------
         trackFormSubmission();
