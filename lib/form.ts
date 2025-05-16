@@ -69,9 +69,10 @@ export const prepareERPData = (
     };
 };
 
-export const trackFormSubmission = () => {
+export const trackFormSubmission = async () => {
     window.fbq("track", "SubmitApplication");
     window.gtag("event", "GEU_Leads", {
         send_to: "AW-823971696/_vxmCMSb05QBEPCe84gD",
     });
+    await fetch("https://trk.clmbtrck.in/pixel?av=63204d84ed8de9547b2c53d6");
 };
