@@ -434,6 +434,13 @@ export default function Home() {
                                             Registration successful! We look
                                             forward to seeing you at the event.
                                         </div>
+                                        <iframe
+                                            src="https://trk.clmbtrck.in/pixel?adid=682744e6f4c6db302a7a2a44&txn_id={order_id}"
+                                            scrolling="no"
+                                            frameBorder="0"
+                                            width="1"
+                                            height="1"
+                                        ></iframe>
                                     </div>
                                 </div>
                             ) : formError ? (
