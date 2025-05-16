@@ -210,7 +210,7 @@ export default function Home() {
         )}#${today.toISOString()}`;
 
         // ------------ Tracking Data ---------------------------------------------------
-        await trackFormSubmission();
+        trackFormSubmission();
 
         try {
             // ------------ AWS API -------------------------------------------------------
