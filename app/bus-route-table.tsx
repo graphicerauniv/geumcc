@@ -84,7 +84,10 @@ const busRoutes = [
 
 export default function BusRouteTable() {
     return (
-        <div className="min-h-screen w-full bg-gradient-to-br from-blue-600 via-blue-500 to-blue-700 py-10 px-4">
+        <div
+            id="bus-route-table"
+            className="min-h-screen w-full bg-gradient-to-br from-blue-600 via-blue-500 to-blue-700 py-10 px-4"
+        >
             <div className="w-full max-w-7xl mx-auto rounded-xl shadow-2xl p-6 border border-white/30">
                 <h2 className="text-3xl md:text-4xl font-bold font-serif mb-8 text-center text-white">
                     BUS ROUTE PLAN FOR SUNDAY
