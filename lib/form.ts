@@ -48,7 +48,7 @@ export const prepareERPData = (
         LeadType: "Online",
         Course: "Counseling",
         Email: values.email,
-        LeadSource: "MCC-LP",
+        LeadSource: "MCC-HALDWANI-LP",
         Field1: utmParams.utm_source,
         Field5: utmParams.utm_medium,
         Field6: utmParams.utm_campaign,

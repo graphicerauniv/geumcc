@@ -24,7 +24,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import logo from "@/assets/geu-white.svg";
+import logo from "@/assets/gehu-white.svg";
 
 import { PLACES } from "@/data/static";
 
@@ -97,7 +97,7 @@ export default function Home() {
     const [phoneVerified, setPhoneVerified] = useState(false);
     const [phoneOtpSent, setPhoneOtpSent] = useState(false);
     const [submitting, setSubmitting] = useState(false);
-    const [formSubmitted, setFormSubmitted] = useState(true);
+    const [formSubmitted, setFormSubmitted] = useState(false);
     const [formError, setFormError] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -108,7 +108,7 @@ export default function Home() {
             phone: "",
             phoneOtp: "",
             state: "Uttarakhand",
-            city: "Dehradun",
+            city: "Haldwani",
             domain: "",
             education: "",
             isRegistered: false,
@@ -219,7 +219,7 @@ export default function Home() {
                 name: values.name,
                 email: values.email,
                 phone: phoneWithDateAndTime,
-                campaign_source: `MCC-LP`,
+                campaign_source: `MCC-HALDWANI-LP`,
                 domain: values.domain,
                 education: values.education,
                 state: values.state,
@@ -371,17 +371,18 @@ export default function Home() {
                             <div className="flex flex-col gap-4 mb-8">
                                 <div className="flex items-center gap-2">
                                     <Calendar className="h-5 w-5 text-blue-400" />
-                                    <span>Sunday, May 18, 2025</span>
+                                    <span>
+                                        May 31 & June 01, 2025 (Saturday &
+                                        Sunday)
+                                    </span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Clock className="h-5 w-5 text-blue-400" />
-                                    <span> Reporting Time: 9:00 AM </span>
+                                    <span> Reporting Time: 10:00 AM </span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <MapPin className="h-5 w-5 text-blue-400" />
-                                    <span>
-                                        Silver Jubilee Convention Center, GEU
-                                    </span>
+                                    <span>GEHU Haldwani Campus</span>
                                 </div>
                             </div>
 
@@ -414,54 +415,83 @@ export default function Home() {
                             )}
                         >
                             {formSubmitted ? (
+                                // <div className="flex h-full min-h-[400px] items-center justify-center text-white">
+                                //     <div className="flex flex-col items-center text-center p-6">
+                                //         <div className="mb-4">
+                                //             <svg
+                                //                 xmlns="http://www.w3.org/2000/svg"
+                                //                 className="h-16 w-16 text-amber-400"
+                                //                 fill="none"
+                                //                 viewBox="0 0 24 24"
+                                //                 stroke="currentColor"
+                                //             >
+                                //                 <path
+                                //                     strokeLinecap="round"
+                                //                     strokeLinejoin="round"
+                                //                     strokeWidth={2}
+                                //                     d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                                //                 />
+                                //             </svg>
+                                //         </div>
+                                //         <div className="text-xl font-semibold tracking-wide">
+                                //             Online registration closed
+                                //         </div>
+                                //         <div className="mt-2 text-white/90">
+                                //             On-the-spot registration available.
+                                //             <br />
+                                //             Contact counter for more details.
+                                //         </div>
+                                //         <div className="mt-4 text-white hover:text-amber-200 transition-colors">
+                                //             <a
+                                //                 href="#bus-route-table"
+                                //                 className="flex items-center justify-center gap-1 font-medium"
+                                //             >
+                                //                 Check below for bus routes
+                                //                 <svg
+                                //                     xmlns="http://www.w3.org/2000/svg"
+                                //                     className="h-4 w-4"
+                                //                     fill="none"
+                                //                     viewBox="0 0 24 24"
+                                //                     stroke="currentColor"
+                                //                 >
+                                //                     <path
+                                //                         strokeLinecap="round"
+                                //                         strokeLinejoin="round"
+                                //                         strokeWidth={2}
+                                //                         d="M19 9l-7 7-7-7"
+                                //                     />
+                                //                 </svg>
+                                //             </a>
+                                //         </div>
+                                //     </div>
+                                // </div>
                                 <div className="flex h-full min-h-[400px] items-center justify-center text-white">
-                                    <div className="flex flex-col items-center text-center p-6">
-                                        <div className="mb-4">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-16 w-16 text-amber-400"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                                                />
-                                            </svg>
+                                    <div className="flex items-start gap-2">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="h-12 w-12"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                            />
+                                        </svg>
+                                        <div className="text-lg">
+                                            Registration successful! We look
+                                            forward to seeing you at the event.
                                         </div>
-                                        <div className="text-xl font-semibold tracking-wide">
-                                            Online registration closed
-                                        </div>
-                                        <div className="mt-2 text-white/90">
-                                            On-the-spot registration available.
-                                            <br />
-                                            Contact counter for more details.
-                                        </div>
-                                        <div className="mt-4 text-white hover:text-amber-200 transition-colors">
-                                            <a
-                                                href="#bus-route-table"
-                                                className="flex items-center justify-center gap-1 font-medium"
-                                            >
-                                                Check below for bus routes
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    className="h-4 w-4"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M19 9l-7 7-7-7"
-                                                    />
-                                                </svg>
-                                            </a>
-                                        </div>
+                                        <iframe
+                                            src="https://trk.clmbtrck.in/pixel?adid=682744e6f4c6db302a7a2a44"
+                                            scrolling="no"
+                                            frameBorder="0"
+                                            width="1"
+                                            height="1"
+                                        ></iframe>
                                     </div>
                                 </div>
                             ) : formError ? (
