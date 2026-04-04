@@ -332,7 +332,7 @@ export default function Home() {
 
                             <div className="mb-8">
                                 <h3 className="text-xl font-semibold mb-3">
-                                    Event Highlights:
+                                    What You Can Expect:
                                 </h3>
                                 <ul className="space-y-2">
                                     <li className="flex items-start">
@@ -421,7 +421,7 @@ export default function Home() {
   <div
     className="npf_wgts"
     data-height="590px"
-    data-w="1049d8658514925adaa25c89f833bb54"
+    data-w="0fbd2a389052cbcbd8ba56e626b93a46"
     style={{ minHeight: "590px", width: "100%" }}
   ></div>
 </div>
