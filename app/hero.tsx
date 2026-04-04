@@ -311,8 +311,9 @@ export default function Home() {
         <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 bg-[url('/mcc/bg.webp')] bg-cover bg-center bg-no-repeat">
 
             <div className="bg-black/60 min-h-screen">
-                        <script
-  src="https://widgets.in4.nopaperforms.com/emwgts.js" strategy="afterInteractive"/>
+                          <Script
+    src="https://widgets.in4.nopaperforms.com/emwgts.js"strategy="afterInteractive"
+  />
                 <div className="container mx-auto px-4 py-12">
                     <div className="flex justify-center mb-8">
                         <h1 className="text-3xl font-bold text-white">
@@ -390,7 +391,8 @@ export default function Home() {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <MapPin className="h-5 w-5 text-blue-400" />
-                                    <span>GEHU Campus</span>
+                                    <span> Venue:Silver Jubilee Content Center<br></br>
+                                        Graphic Era (Deemed to be University) </span>
                                 </div>
                             </div>
 
