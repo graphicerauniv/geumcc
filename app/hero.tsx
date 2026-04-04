@@ -317,7 +317,12 @@ export default function Home() {
                 <div className="container mx-auto px-4 py-12">
                     <div className="flex justify-center mb-8">
                         <h1 className="text-3xl font-bold text-white">
-                            <Image src={logo} alt="Graphic Era University" />
+                            <Image
+  src={logo}
+  alt="Graphic Era University"
+  width={150}
+  height={60}
+/>
                         </h1>
                     </div>
 
