@@ -341,46 +341,20 @@ export default function Home() {
                                 <h3 className="text-xl font-semibold mb-3">
                                     What You Can Expect:
                                 </h3>
-                                <ul className="space-y-2">
-                                    <li className="flex items-start">
-                                        <span className="text-blue-400 mr-2">
-                                            •
-                                        </span>
-                                        <span>
-                                            One-on-one career guidance tailored to your interests
-
-                                        </span>
-                                    </li>
-                                    <li className="flex items-start">
-                                        <span className="text-blue-400 mr-2">
-                                            •
-                                        </span>
-                                        <span>
-                                            Focused sessions on emerging growth domains
-
-                                        </span>
-                                    </li>
-                                    <li className="flex items-start">
-                                        <span className="text-blue-400 mr-2">
-                                            •
-                                        </span>
-                                        <span>
-                                            Hands-on exposure to emerging fields like Generative AI
-
-                                        </span>
-                                    </li>
-
-                                     <li className="flex items-start">
-                                        <span className="text-blue-400 mr-2">
-                                            •
-                                        </span>
-                                        <span>
-                                            Real world insights from Industry and Academic leaders
-
-
-                                        </span>
-                                    </li>
-                                </ul>
+                                <ol className="space-y-2 list-none pl-0 counter-reset-item">
+  <li className="flex before:content-['1)'] before:counter-increment-[item] before:mr-2">
+    1:1 career guidance tailored to your interests
+  </li>
+  <li className="flex before:content-['2)'] before:counter-increment-[item] before:mr-2">
+    Focused sessions on emerging growth domains
+  </li>
+  <li className="flex before:content-['3)'] before:counter-increment-[item] before:mr-2">
+    Hands-on exposure to emerging fields like Generative AI
+  </li>
+  <li className="flex before:content-['4)'] before:counter-increment-[item] before:mr-2">
+    Real world insights from Industry and Academic leaders
+  </li>
+</ol>
                             </div>
 
                             {/* Event details */}
