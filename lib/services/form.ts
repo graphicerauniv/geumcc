@@ -13,9 +13,23 @@ export async function createFormSubmission(
     try {
         await dbConnect();
 
+        const normalizedPhone = formSubmissionData.phone.replace(/\D/g, "");
+        if (normalizedPhone.length !== 10) {
+            throw new Error("Invalid phone number");
+        }
+
+        const existingSubmission = await FormSubmissionModel.findOne({
+            phone: normalizedPhone,
+        }).lean();
+
+        if (existingSubmission) {
+            throw new Error("A submission with this phone number already exists");
+        }
+
         // Add timestamps
         const formSubmissionWithTimestamps = {
             ...formSubmissionData,
+            phone: normalizedPhone,
             createdAt: new Date(),
             updatedAt: new Date(),
         };
@@ -27,6 +41,16 @@ export async function createFormSubmission(
         return JSON.parse(JSON.stringify(formSubmission));
     } catch (error) {
         console.error("MongoDB error:", error);
+        if (error instanceof Error) {
+            if (
+                error.message.includes(
+                    "A submission with this phone number already exists"
+                ) ||
+                error.message.includes("Invalid phone number")
+            ) {
+                throw error;
+            }
+        }
         throw new Error("Database error during form submission creation");
     }
 }
@@ -53,5 +77,24 @@ export async function getFormSubmissionById(formSubmissionId: string) {
     } catch (error) {
         console.error("MongoDB error:", error);
         throw new Error("Database error during form submission retrieval");
+    }
+}
+
+/**
+ * Get all form submissions
+ * @returns List of submissions sorted by newest first
+ */
+export async function getAllFormSubmissions() {
+    try {
+        await dbConnect();
+
+        const submissions = await FormSubmissionModel.find({})
+            .sort({ createdAt: -1 })
+            .lean();
+
+        return JSON.parse(JSON.stringify(submissions));
+    } catch (error) {
+        console.error("MongoDB error:", error);
+        throw new Error("Database error during form submissions retrieval");
     }
 }

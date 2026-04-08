@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import { serverEnv } from "@/lib/env/server";
 
 // MongoDB connection string
-const MONGODB_URI = serverEnv.MONGODB_URI || "mongodb://localhost:27017";
-const MONGODB_DB = serverEnv.MONGODB_DB || "auth_system";
+const MONGODB_URI = serverEnv.MONGODB_URI;
+const MONGODB_DB = serverEnv.MONGODB_DB;
 
 // Database connection
 interface ConnectionCache {
@@ -27,13 +27,27 @@ export async function dbConnect() {
     }
 
     if (!cached.promise) {
+        if (!MONGODB_URI) {
+            throw new Error("MONGODB_URI is not configured");
+        }
+
         const opts = {
             bufferCommands: true,
+            dbName: MONGODB_DB || undefined,
+            serverSelectionTimeoutMS: 10000,
+            family: 4,
         };
 
-        cached.promise = mongoose.connect(`${MONGODB_URI}/${MONGODB_DB}`, opts);
+        cached.promise = mongoose.connect(MONGODB_URI, opts);
     }
 
-    cached.conn = await cached.promise;
-    return cached.conn;
+    try {
+        cached.conn = await cached.promise;
+        return cached.conn;
+    } catch (error) {
+        // Allow retries with updated env/config instead of keeping a rejected promise forever.
+        cached.promise = null;
+        cached.conn = null;
+        throw error;
+    }
 }

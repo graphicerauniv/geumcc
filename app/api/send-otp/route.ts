@@ -25,16 +25,33 @@ export async function POST(request: NextRequest) {
 
         // Send OTP based on type
         if (type === "EMAIL") {
-            await sendEmailOTP(identifier, otp);
+            const sent = await sendEmailOTP(identifier, otp);
+            if (!sent) {
+                return NextResponse.json(
+                    { message: "Failed to send OTP email" },
+                    { status: 500 }
+                );
+            }
         } else if (type === "PHONE") {
-            await sendSmsOTP(identifier, otp);
+            const sent = await sendSmsOTP(identifier, otp);
+            if (!sent) {
+                return NextResponse.json(
+                    { message: "Failed to send OTP SMS" },
+                    { status: 500 }
+                );
+            }
         }
 
         return NextResponse.json({ message: "OTP sent successfully" });
     } catch (error) {
         console.error("Error sending OTP:", error);
         return NextResponse.json(
-            { message: "Failed to send OTP" },
+            {
+                message:
+                    error instanceof Error
+                        ? error.message
+                        : "Failed to send OTP",
+            },
             { status: 500 }
         );
     }

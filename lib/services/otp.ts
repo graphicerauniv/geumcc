@@ -1,7 +1,47 @@
-import { FormSubmissionModel, OTPModel } from "@/lib/db/models";
+import { OTPModel } from "@/lib/db/models";
 import { dbConnect } from "@/lib/db/db";
 import { sendMailGeneric } from "./mailing";
 import { sendPhoneOTP } from "./phone";
+
+type OTPRecord = {
+    code: string;
+    expiresAt: Date;
+};
+
+const otpMemoryStore = new Map<string, OTPRecord>();
+
+function getOtpStoreKey(identifier: string, type: "EMAIL" | "PHONE"): string {
+    return `${type}:${identifier}`;
+}
+
+function setFallbackOTP(identifier: string, type: "EMAIL" | "PHONE", code: string) {
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+    otpMemoryStore.set(getOtpStoreKey(identifier, type), { code, expiresAt });
+}
+
+function verifyFallbackOTP(
+    identifier: string,
+    type: "EMAIL" | "PHONE",
+    otpToVerify: string
+): boolean {
+    const key = getOtpStoreKey(identifier, type);
+    const record = otpMemoryStore.get(key);
+    if (!record) {
+        return false;
+    }
+
+    if (new Date() > record.expiresAt) {
+        otpMemoryStore.delete(key);
+        return false;
+    }
+
+    if (record.code !== otpToVerify) {
+        return false;
+    }
+
+    otpMemoryStore.delete(key);
+    return true;
+}
 
 // Generate a random 6-digit OTP
 export function generateOTP(): string {
@@ -13,11 +53,10 @@ export async function createOTP(
     identifier: string,
     type: "EMAIL" | "PHONE"
 ): Promise<string> {
+    const code = generateOTP();
+
     try {
         await dbConnect();
-
-        // Generate a new OTP
-        const code = generateOTP();
 
         // OTP expires in 10 minutes
         const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
@@ -36,8 +75,12 @@ export async function createOTP(
 
         return code;
     } catch (error) {
-        console.error("Error creating OTP:", error);
-        throw new Error("Could not create OTP");
+        console.error(
+            "Mongo unavailable while creating OTP. Using in-memory fallback:",
+            error
+        );
+        setFallbackOTP(identifier, type, code);
+        return code;
     }
 }
 
@@ -58,7 +101,7 @@ export async function verifyOTP(
         });
 
         if (!otp) {
-            return false;
+            return verifyFallbackOTP(identifier, type, otpToVerify);
         }
 
         // Check if OTP has expired
@@ -73,8 +116,11 @@ export async function verifyOTP(
 
         return true;
     } catch (error) {
-        console.error("Error verifying OTP:", error);
-        throw new Error("Could not verify OTP");
+        console.error(
+            "Mongo unavailable while verifying OTP. Trying in-memory fallback:",
+            error
+        );
+        return verifyFallbackOTP(identifier, type, otpToVerify);
     }
 }
 
@@ -114,6 +160,9 @@ export async function sendSmsOTP(phone: string, otp: string): Promise<boolean> {
     console.log(`Sending OTP ${otp} to phone: ${phone}`);
 
     //Send OTP to phone number
-    await sendPhoneOTP(phone, otp);
+    const result = await sendPhoneOTP(phone, otp);
+    if (!result.success) {
+        throw new Error(result.message || "Failed to send phone OTP");
+    }
     return true;
 }

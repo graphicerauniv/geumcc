@@ -20,8 +20,34 @@ export async function POST(request: NextRequest) {
         });
     } catch (error) {
         console.error("Error submitting form:", error);
+
+        if (error instanceof Error) {
+            if (
+                error.message.includes(
+                    "A submission with this phone number already exists"
+                )
+            ) {
+                return NextResponse.json(
+                    { message: error.message },
+                    { status: 409 }
+                );
+            }
+
+            if (error.message.includes("Invalid phone number")) {
+                return NextResponse.json(
+                    { message: error.message },
+                    { status: 400 }
+                );
+            }
+        }
+
         return NextResponse.json(
-            { message: "Failed to submit form" },
+            {
+                message:
+                    error instanceof Error
+                        ? error.message
+                        : "Failed to submit form",
+            },
             { status: 500 }
         );
     }
