@@ -26,6 +26,7 @@ import Image from "next/image";
 import logo from "@/assets/geu-white.webp";
 
 import { PLACES } from "@/data/static";
+import { COURSE_OPTIONS, DEPARTMENTS } from "@/data/course-options";
 
 import { Calendar, Clock, MapPin } from "lucide-react";
 import {
@@ -39,39 +40,10 @@ const formSchema = z.object({
     phoneOtp: z.string().min(6, "OTP must be 6 digits").optional(),
     state: z.string().min(1, "State is required"),
     city: z.string().min(1, "City is required"),
-    domain: z.string().min(1, "Domain is required"),
-    education: z.string().min(1, "Education level is required"),
+    domain: z.string().min(1, "Department is required"),
+    education: z.string().min(1, "Course is required"),
     isRegistered: z.boolean(),
 });
-
-const DOMAINS = [
-    { value: "computer-science", label: "Computer Science" },
-    { value: "aerospace-engineering", label: "Aerospace Engineering" },
-    {
-        value: "electronics-and-communication",
-        label: "Electronics and Communication",
-    },
-    { value: "mechanical-engineering", label: "Mechanical Engineering" },
-    { value: "civil-engineering", label: "Civil Engineering" },
-    { value: "biotechnology", label: "Biotechnology" },
-    { value: "management", label: "Management" },
-    { value: "commerce", label: "Commerce" },
-    { value: "law", label: "Law" },
-    { value: "design", label: "Design" },
-    { value: "media-and-mass-com", label: "Media and Mass Com" },
-    { value: "fashion-design", label: "Fashion Design" },
-    {
-        value: "humanities-and-social-sciences",
-        label: "Humanities and Social Sciences",
-    },
-    { value: "paramedical-sciences", label: "Paramedical Sciences" },
-    { value: "life-sciences", label: "Life Sciences" },
-];
-
-const EDUCATION_LEVELS = [
-    { value: "ug", label: "Undergraduate (UG)" },
-    { value: "pg", label: "Postgraduate (PG)" },
-];
 
 // Stats for the hero section
 const STATS = [
@@ -110,6 +82,10 @@ export default function Home() {
             isRegistered: false,
         },
     });
+    const selectedDepartment = form.watch("domain");
+    const selectedDepartmentCourses = selectedDepartment
+        ? COURSE_OPTIONS[selectedDepartment] || []
+        : [];
 
     const handleSendPhoneOTP = async () => {
         try {
@@ -570,21 +546,25 @@ export default function Home() {
                                                 render={({ field }) => (
                                                     <FormItem className="w-full">
                                                         <FormLabel className="text-white font-medium">
-                                                            Domain
+                                                            Department
                                                         </FormLabel>
                                                         <Select
-                                                            onValueChange={field.onChange}
+                                                            onValueChange={(value) => {
+                                                                field.onChange(value);
+                                                                form.setValue("education", "");
+                                                                form.clearErrors("education");
+                                                            }}
                                                             defaultValue={field.value}
                                                         >
                                                             <FormControl>
                                                                 <SelectTrigger className="bg-white/90 border-zinc-300 w-full">
-                                                                    <SelectValue placeholder="Select a domain" />
+                                                                    <SelectValue placeholder="Select a department" />
                                                                 </SelectTrigger>
                                                             </FormControl>
                                                             <SelectContent>
-                                                                {DOMAINS.map((domain) => (
-                                                                    <SelectItem key={domain.value} value={domain.value}>
-                                                                        {domain.label}
+                                                                {DEPARTMENTS.map((department) => (
+                                                                    <SelectItem key={department} value={department}>
+                                                                        {department}
                                                                     </SelectItem>
                                                                 ))}
                                                             </SelectContent>
@@ -600,21 +580,28 @@ export default function Home() {
                                                 render={({ field }) => (
                                                     <FormItem className="w-full">
                                                         <FormLabel className="text-white font-medium">
-                                                            Education Level
+                                                            Course
                                                         </FormLabel>
                                                         <Select
                                                             onValueChange={field.onChange}
                                                             defaultValue={field.value}
+                                                            disabled={!selectedDepartment}
                                                         >
                                                             <FormControl>
-                                                                <SelectTrigger className="bg-white/90 border-zinc-300 w-full">
-                                                                    <SelectValue placeholder="Select education" />
+                                                                <SelectTrigger className="bg-white/90 border-zinc-300 w-full" disabled={!selectedDepartment}>
+                                                                    <SelectValue
+                                                                        placeholder={
+                                                                            selectedDepartment
+                                                                                ? "Select a course"
+                                                                                : "Select department first"
+                                                                        }
+                                                                    />
                                                                 </SelectTrigger>
                                                             </FormControl>
                                                             <SelectContent>
-                                                                {EDUCATION_LEVELS.map((level) => (
-                                                                    <SelectItem key={level.value} value={level.value}>
-                                                                        {level.label}
+                                                                {selectedDepartmentCourses.map((course) => (
+                                                                    <SelectItem key={course} value={course}>
+                                                                        {course}
                                                                     </SelectItem>
                                                                 ))}
                                                             </SelectContent>
