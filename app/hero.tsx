@@ -242,7 +242,7 @@ export default function Home() {
                                 Mega Career Counselling
                             </h2>
                             <p className="text-xl mb-4">
-                                Engage with visionaries and academic leaders who understand what it takes to succeed today. Get real insights, practical direction, and answers that actually matter to your future. Take a pivotal next step in your journey!
+                                Engage with visionaries and academic leaders who understand what it takes to succeed today. Get real insights, practical direction and answers that actually matter to your future. Take a pivotal next step in your journey!
                             </p>
 
                             <div className="mb-8">
@@ -257,7 +257,7 @@ export default function Home() {
     Focused sessions on emerging growth domains
   </li>
   <li className="flex before:content-['3)'] before:counter-increment-[item] before:mr-2">
-    Hands-on exposure to emerging fields of Artificial Intelligence
+    Hands on exposure to emerging fields of Artificial Intelligence
   </li>
   <li className="flex before:content-['4)'] before:counter-increment-[item] before:mr-2">
     Real world insights from Industry and Academic leaders
