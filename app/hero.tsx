@@ -257,7 +257,7 @@ export default function Home() {
     Focused sessions on emerging growth domains
   </li>
   <li className="flex before:content-['3)'] before:counter-increment-[item] before:mr-2">
-    Hands-on exposure to emerging fields like Generative AI
+    Hands-on exposure to emerging fields of Artificial Intelligence
   </li>
   <li className="flex before:content-['4)'] before:counter-increment-[item] before:mr-2">
     Real world insights from Industry and Academic leaders
@@ -279,7 +279,7 @@ export default function Home() {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <MapPin className="h-5 w-5 text-blue-400" />
-                                    <span> Venue:Silver Jubilee Content Center<br></br>
+                                    <span> Venue:Silver Jubilee Convention Center<br></br>
                                         Graphic Era (Deemed to be University) </span>
                                 </div>
                             </div>
