@@ -20,7 +20,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import logo from "@/assets/geu-white.webp";
@@ -75,13 +74,14 @@ export default function Home() {
             email: "",
             phone: "",
             phoneOtp: "",
-            state: "Uttarakhand",
-            city: "Haldwani",
+            state: "",
+            city: "",
             domain: "",
             education: "",
             isRegistered: false,
         },
     });
+    const selectedState = form.watch("state");
     const selectedDepartment = form.watch("domain");
     const selectedDepartmentCourses = selectedDepartment
         ? COURSE_OPTIONS[selectedDepartment] || []
@@ -486,9 +486,10 @@ export default function Home() {
                                                         <Select
                                                             onValueChange={(value) => {
                                                                 field.onChange(value);
-                                                                form.setValue("city", getCitiesForState(value)[0] || "");
+                                                                form.setValue("city", "");
+                                                                form.clearErrors("city");
                                                             }}
-                                                            defaultValue={field.value}
+                                                            value={field.value}
                                                         >
                                                             <FormControl>
                                                                 <SelectTrigger className="bg-white/90 border-zinc-300 w-full">
@@ -518,15 +519,16 @@ export default function Home() {
                                                         </FormLabel>
                                                         <Select
                                                             onValueChange={field.onChange}
-                                                            defaultValue={field.value}
+                                                            value={field.value}
+                                                            disabled={!selectedState}
                                                         >
                                                             <FormControl>
-                                                                <SelectTrigger className="bg-white/90 border-zinc-300 w-full">
+                                                                <SelectTrigger className="bg-white/90 border-zinc-300 w-full" disabled={!selectedState}>
                                                                     <SelectValue placeholder="Select a city" />
                                                                 </SelectTrigger>
                                                             </FormControl>
                                                             <SelectContent>
-                                                                {getCitiesForState(form.getValues("state")).map((city) => (
+                                                                {getCitiesForState(selectedState).map((city) => (
                                                                     <SelectItem key={city} value={city}>
                                                                         {city}
                                                                     </SelectItem>
@@ -539,7 +541,7 @@ export default function Home() {
                                             />
                                         </div>
 
-                                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                        <div className="grid grid-cols-1 gap-4">
                                             <FormField
                                                 control={form.control}
                                                 name="domain"
@@ -554,7 +556,7 @@ export default function Home() {
                                                                 form.setValue("education", "");
                                                                 form.clearErrors("education");
                                                             }}
-                                                            defaultValue={field.value}
+                                                            value={field.value}
                                                         >
                                                             <FormControl>
                                                                 <SelectTrigger className="bg-white/90 border-zinc-300 w-full">
@@ -584,7 +586,7 @@ export default function Home() {
                                                         </FormLabel>
                                                         <Select
                                                             onValueChange={field.onChange}
-                                                            defaultValue={field.value}
+                                                            value={field.value}
                                                             disabled={!selectedDepartment}
                                                         >
                                                             <FormControl>
