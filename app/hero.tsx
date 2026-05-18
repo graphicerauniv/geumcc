@@ -270,7 +270,7 @@ export default function Home() {
                                 <div className="flex items-center gap-2">
                                     <Calendar className="h-5 w-5 text-blue-400" />
                                     <span>
-                                        17-Apr-2026 (Friday)
+                                        21-May-2026 (Thursday)
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2">
